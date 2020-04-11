@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <title>Global Covid19 Impact</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+
+   
+
+    <!--<link href="box.css" rel="stylesheet" type="text/css">   -->
+
+      <!--Include the main three.js script.
+
+      The global variable THREE will be
+      available for use in any scripts
+      loaded after this one.
+
+    -->
+
+    <script src="three.js"></script>
+	<script src="three.interaction.js"></script>
+	<script src="OrbitControls.js"></script>
+	<script src="threex.domevents.js"></script>
+	 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	
+	
+	<script>
+	
+	var coronaData
+	var India ="";
+	
+function closePop(prop) {
+	
+  var element = document.getElementById(prop);
+  element.classList.add("InvisibleLable");
+   
+}
+
+function loadDate(){
+
+ $.getJSON('https://api.covid19api.com/summary', function(data) {
+        
+		tempVar = data.Countries.length;
+       
+		if(tempVar != 0)
+		{
+		    
+			document.getElementById("Loader").className = "InvisibleLable";
+			coronaData = data.Countries;
+			
+		   // alert("Countries:" + India);
+			  init();
+             animate();
+			
+			
+		}
+                    
+        
+       // $(".mypanel").html(text);
+    });
+
+}
+	</script>
+	
+	<style>
+	
+	body
+	{
+		cellpadding: 0px;
+		cellspacing:0px;
+		margin:0px;
+		padding:0px;
+	    
+	}
+	
+	.header{
+	 position: absolute;
+    top: 2%;
+    left: 40%;
+    margin-top: -25px;
+    margin-left: -50px;
+	color: white;
+		font-family: tahoma;
+	}
+	
+    .pcontainer {
+        position: absolute;
+	
+    }
+	
+	#canvas{
+	
+	
+	
+	
+	}
+	
+    .visibleLable {
+        position: relative;
+		background-color: rgba(0, 0, 0, 0.7);
+		color: white;
+		font-family: tahoma;
+		padding: 1em;
+		display: block;
+		
+		
+    }
+	
+	.InvisibleLable {
+        position: relative;
+		left: 10px;
+		top:30px;
+		background-color: rgba(0, 0, 0, 0.7);
+		color: white;
+		font-family: monospace;
+		padding: 1em;
+		display: none;
+		
+		
+    }
+	
+	
+	</style>
+
+  </head>
+
+<body onload="loadDate()">
+<div id="Loader">Loading Data...</div>
+<div class="header"><h4>Most Effected COVID-19 Countries (+3000)</h4></div>
+	<div class="pcontainer">
+	
+	<canvas id="canvas"></canvas>
+	
+	<!--India-->
+	<div id="IN" class="InvisibleLable">
+	<div id ="logs"></div>
+	<div style="float:right;"><button onclick="closePop('IN')">Close</button></div>
+	<h2 >INDIA</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="INE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="IND"></span>
+	</p>
+	
+	
+	</div>
+	<!--China-->
+	<div id="CN" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('CN')">Close</button></div>
+	<h2>CHINA</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="CNE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="CND"></span>
+	</p>
+	
+	
+	</div>
+	
+	<!--Pak-->
+	<div id="PK" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('PK')">Close</button></div>
+	<h2>Pakistan</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="PKE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="PKD"></span>
+	</p>
+	</div>
+	<!--Skorea-->
+	<div id="KR" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('KR')">Close</button></div>
+	<h2>South Korea</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="KRE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="KRD"></span>
+	</p>
+	</div>
+	<!--Japan-->
+	<div id="JP" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('JP')">Close</button></div>
+	<h2>Japan</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="JPE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="JPD"></span>
+	</p>
+	</div>
+	<!--Malaysia-->
+	<div id="MY" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('MY')">Close</button></div>
+	<h2>Malaysia</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="MYE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="MYD"></span>
+	</p>
+	</div>
+	<!--Php-->
+	<div id="PH" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('PH')">Close</button></div>
+	<h2>Philippines</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="PHE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="PHD"></span>
+	</p>
+	</div>
+	<!--Aus-->
+	<div id="AU" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('AU')">Close</button></div>
+	<h2>Australia</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="AUE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="AUD"></span>
+	</p>
+	</div>
+	<!--Russia-->
+	<div id="RU" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('RU')">Close</button></div>
+	<h2>Russia</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="RUE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="RUD"></span>
+	</p>
+	</div>
+	<!--Iran-->
+	<div id="IR" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('IR')">Close</button></div>
+	<h2>Iran</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="IRE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="IRD"></span>
+	</p>
+	</div>
+	
+	<!--Turkey-->
+	<div id="TR" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('TR')">Close</button></div>
+	<h2>Turkey</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="TRE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="TRD"></span>
+	</p>
+	</div>
+	
+	<!--Israel-->
+	<div id="IL" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('IL')">Close</button></div>
+	<h2>Israel</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="ILE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="ILD"></span>
+	</p>
+	</div>
+	
+	<!--Romania-->
+	<div id="RO" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('RO')">Close</button></div>
+	<h2>Romania</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="ROE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="ROD"></span>
+	</p>
+	</div>
+	
+	<!--Holland-->
+	<div id="NL" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('NL')">Close</button></div>
+	<h2>Holland</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="NLE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="NLD"></span>
+	</p>
+	</div>
+	<!--Belgium-->
+	<div id="BE" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('BE')">Close</button></div>
+	<h2>Belgium</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="BEE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="BED"></span>
+	</p>
+	</div>
+	<!--Uk-->
+	<div id="GB" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('GB')">Close</button></div>
+	<h2>United Kingdom</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="GBE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="GBD"></span>
+	</p>
+	</div>
+	<!--France-->
+	<div id="FR" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('FR')">Close</button></div>
+	<h2>France</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="FRE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="FRD"></span>
+	</p>
+	</div>
+	<!--Spain-->
+	<div id="ES" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('ES')">Close</button></div>
+	<h2>Spain</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="ESE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="ESD"></span>
+	</p>
+	</div>
+	<!--Portugal-->
+	<div id="PT" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('PT')">Close</button></div>
+	<h2>Portugal</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="PTE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="PTD"></span>
+	</p>
+	</div>
+	<!--Germany-->
+	<div id="DE" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('DE')">Close</button></div>
+	<h2>Germany</h2>
+		<p>Total Corona (Covid 19) Effected:
+	<span id="DEE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="DED"></span>
+	</p>
+	</div>
+	<!--Switzerland-->
+	<div id="CH" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('CH')">Close</button></div>
+	<h2>Switzerland</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="CHE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="CHD"></span>
+	</p>
+	</div>
+	<!--Austria-->
+	<div id="AT" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('AT')">Close</button></div>
+	<h2>Austria</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="ATE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="ATD"></span>
+	</p>
+	</div>
+	<!--Cez-->
+	<div id="CZ" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('CZ')">Close</button></div>
+	<h2>Czechia</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="CZE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="CZD"></span>
+	</p>
+	</div>
+	<!--Poland-->
+	<div id="PL" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('PL')">Close</button></div>
+	<h2>Poland</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="PLE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="PLD"></span>
+	</p>
+	</div>
+	<!--Denmark-->
+	<div id="DK" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('DK')">Close</button></div>
+	<h2>Denmark</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="DKE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="DKD"></span>
+	</p>
+	</div>
+	<!--Norway-->
+	<div id="NO" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('NO')">Close</button></div>
+	<h2>Norway</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="NOE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="NOD"></span>
+	</p>
+	</div>
+	<!--Sweden-->
+	<div id="SE" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('SE')">Close</button></div>
+	<h2>Sweden</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="SEE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="SED"></span>
+	</p>
+	</div>
+	<!--Italy-->
+	<div id="IT" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('IT')">Close</button></div>
+	<h2>Italy</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="ITE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="ITD"></span>
+	</p>
+	</div>
+	<!--USA-->
+	<div id="US" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('US')">Close</button></div>
+	<h2>USA</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="USE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="USD"></span>
+	</p>
+	</div>
+	<!--Canada-->
+	<div id="CA" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('CA')">Close</button></div>
+	<h2>Canada</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="CAE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="CAD"></span>
+	</p>
+	</div>
+	<!--Brazil-->
+	<div id="BR" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('BR')">Close</button></div>
+	<h2>Brazil</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="BRE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="BRD"></span>
+	</p>
+	</div>
+	<!--Chile-->
+	<div id="CL" class="InvisibleLable">
+	<div style="float:right;"><button onclick="closePop('CL')">Close</button></div>
+	<h2>Chile</h2>
+	<p>Total Corona (Covid 19) Effected:
+	<span id="CLE"></span></p>
+		
+	<p>Total Corona (Covid 19) Deaths: 
+	<span id="CLD"></span>
+	</p>
+	</div>
+	
+	
+	</div>
+    <footer>
+
+     <!-- <script src="app.js"></script>-->
+	  <script src="app.js"></script>
+
+    </footer>
+
+  </body>
+</html>
